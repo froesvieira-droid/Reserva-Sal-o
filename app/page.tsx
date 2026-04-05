@@ -21,6 +21,7 @@ export default function Home() {
     }
     return initialReservations;
   });
+  const [showList, setShowList] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('reservations', JSON.stringify(reservations));
@@ -36,7 +37,15 @@ export default function Home() {
       <div className="flex flex-col items-center">
         <Gallery />
         <Calendar reservations={reservations} setReservations={setReservations} />
-        {/* <ReservationsList reservations={reservations} /> */}
+        
+        <button 
+          onClick={() => setShowList(!showList)}
+          className="mt-8 px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition"
+        >
+          {showList ? 'Ocultar Lista de Reservas' : 'Listar Todas as Reservas'}
+        </button>
+
+        {showList && <ReservationsList reservations={reservations} />}
       </div>
 
       <footer className="max-w-4xl mx-auto mt-16 pt-8 border-t text-center text-gray-500">

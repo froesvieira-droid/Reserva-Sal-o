@@ -20,52 +20,23 @@ interface ReservationsListProps {
 }
 
 export default function ReservationsList({ reservations }: ReservationsListProps) {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filterType, setFilterType] = useState('');
-
-  const filteredReservations = reservations.filter(r => {
-    const matchesSearch = r.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          r.eventType.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          format(r.date, 'dd/MM/yyyy').includes(searchTerm);
-    const matchesType = filterType === '' || r.eventType === filterType;
-    return matchesSearch && matchesType;
-  });
+  const sortedReservations = [...reservations].sort((a, b) => a.date.getTime() - b.date.getTime());
 
   return (
     <div className="mt-8 w-full max-w-4xl p-4 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-4">Lista de Reservas</h2>
-      <div className="flex gap-4 mb-4">
-        <input 
-          type="text" 
-          placeholder="Buscar por nome, data ou tipo..." 
-          value={searchTerm} 
-          onChange={e => setSearchTerm(e.target.value)} 
-          className="border p-2 rounded flex-grow" 
-        />
-        <select value={filterType} onChange={e => setFilterType(e.target.value)} className="border p-2 rounded">
-          <option value="">Todos os tipos</option>
-          <option value="Aniversário">Aniversário</option>
-          <option value="Casamento">Casamento</option>
-          <option value="Corporativo">Corporativo</option>
-          <option value="Outro">Outro</option>
-        </select>
-      </div>
+      <h2 className="text-2xl font-bold mb-4">Todas as Reservas</h2>
       <table className="w-full text-left">
         <thead>
           <tr>
-            <th>Data</th>
-            <th>Nome</th>
-            <th>Tipo</th>
-            <th>Status</th>
+            <th className="p-2">Dia da reserva</th>
+            <th className="p-2">Reservado por</th>
           </tr>
         </thead>
         <tbody>
-          {filteredReservations.map(r => (
+          {sortedReservations.map(r => (
             <tr key={r.id} className="border-t">
               <td className="p-2">{format(r.date, 'dd/MM/yyyy')}</td>
               <td className="p-2">{r.name}</td>
-              <td className="p-2">{r.eventType}</td>
-              <td className="p-2">{r.status === 'confirmed' ? 'Confirmada' : 'Cancelada'}</td>
             </tr>
           ))}
         </tbody>
