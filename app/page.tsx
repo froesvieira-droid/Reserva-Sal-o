@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from '../components/Calendar';
 import ReservationsList from '../components/ReservationsList';
-import Gallery from '../components/Gallery';
 
 const initialReservations: { id: string; date: Date; name: string; phone: string; email: string; guests: string; eventType: string; recurrence: 'none' | 'weekly' | 'monthly'; status: 'confirmed' | 'cancelled' }[] = [
   { id: '1', date: new Date(2026, 3, 10), name: 'João', phone: '123', email: 'joao@email.com', guests: '10', eventType: 'Aniversário', recurrence: 'none', status: 'confirmed' },
@@ -35,7 +34,6 @@ export default function Home() {
       </header>
       
       <div className="flex flex-col items-center">
-        <Gallery />
         <Calendar reservations={reservations} setReservations={setReservations} />
         
         <button 

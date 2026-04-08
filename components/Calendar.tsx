@@ -52,10 +52,7 @@ export default function Calendar({ reservations, setReservations }: CalendarProp
         {days.map((day, idx) => {
           const isReserved = reservations.some(r => {
             if (r.status !== 'confirmed') return false;
-            if (r.recurrence === 'none') return isSameDay(r.date, day);
-            if (r.recurrence === 'weekly') return day.getDay() === r.date.getDay() && isBefore(r.date, day);
-            if (r.recurrence === 'monthly') return day.getDate() === r.date.getDate() && isBefore(r.date, day);
-            return false;
+            return isSameDay(r.date, day);
           });
           const isPast = isBefore(day, startOfToday());
           
@@ -65,9 +62,9 @@ export default function Calendar({ reservations, setReservations }: CalendarProp
               onClick={() => handleDateClick(day)}
               disabled={isPast}
               className={`p-2 rounded-md text-center ${
-                isReserved ? 'bg-red-200 text-red-800' : 
+                isReserved ? 'bg-red-500 text-white font-bold' : 
                 isPast ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 
-                'bg-green-100 text-green-800 hover:bg-green-200'
+                'bg-white text-gray-800 hover:bg-gray-200'
               }`}
             >
               {format(day, 'd')}
