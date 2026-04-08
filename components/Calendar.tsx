@@ -49,6 +49,9 @@ export default function Calendar({ reservations, setReservations }: CalendarProp
         {['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'].map(day => (
           <div key={day} className="text-center font-semibold text-gray-500">{day}</div>
         ))}
+        {Array.from({ length: startOfMonth(currentMonth).getDay() }).map((_, i) => (
+          <div key={`empty-${i}`} />
+        ))}
         {days.map((day, idx) => {
           const isReserved = reservations.some(r => {
             if (r.status !== 'confirmed') return false;
